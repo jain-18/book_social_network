@@ -30,12 +30,7 @@ public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue
     private Integer id;
-    private String firstname;
-    private String lastname;
-    private LocalDate dateOfBirth;
-    @Column(unique = true)
-    private String email;
-    private String  password;
+
     private boolean accountLocked;
     private boolean enabled;
 
@@ -58,7 +53,12 @@ public class User implements UserDetails, Principal {
     public String getName() {
         return email;
     }
-
+    private String firstname;
+    private String lastname;
+    private LocalDate dateOfBirth;
+    @Column(unique = true)
+    private String email;
+    private String  password;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.
@@ -97,7 +97,7 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    private String fullName(){
+    public String fullName(){
         return firstname + " " + lastname;
     }
 }
