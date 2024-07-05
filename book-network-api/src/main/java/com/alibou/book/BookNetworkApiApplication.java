@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -16,6 +18,11 @@ public class BookNetworkApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookNetworkApiApplication.class, args);
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
 	}
 	@Bean
 	public CommandLineRunner runner(RoleRepository roleRepository){
