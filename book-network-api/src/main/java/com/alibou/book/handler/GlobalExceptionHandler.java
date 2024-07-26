@@ -1,5 +1,6 @@
 package com.alibou.book.handler;
 
+import com.alibou.book.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import lombok.Locked;
 import org.springframework.http.HttpStatus;
@@ -98,6 +99,19 @@ public class GlobalExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .businessErrorDescription("Internal Server, Contact the admin!")
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handlerException(OperationNotPermittedException exp) {
+        //log the exception
+        exp.printStackTrace();
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
                                 .error(exp.getMessage())
                                 .build()
                 );
